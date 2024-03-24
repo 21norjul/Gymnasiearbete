@@ -1,0 +1,32 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="480"
+        Width="640" Height="480"
+        x:Class="raspapp.MainWindow"
+        Title="raspapp"
+        >
+  <DockPanel LastChildFill="True">
+    <Border Background="LightGray" Height="40" Margin="40,20,40,0" CornerRadius="5" DockPanel.Dock="Top">
+      <TextBlock Name="clock" FontSize="30" TextAlignment="Center" Foreground="Black">Dock = "Top"</TextBlock>
+    </Border>
+    <Border Background="LightGray" Height="40" Margin="40,20,40,0" CornerRadius="5" DockPanel.Dock="Top">
+      <TextBlock Name="Field1" FontSize="30" TextAlignment="Center" Foreground="Black">Dock = "Top"</TextBlock>
+    </Border>
+    <Border Background="LightGray" Height="40" Margin="40,20,40,0" CornerRadius="5" DockPanel.Dock="Top">
+      <TextBlock Name="Field2" FontSize="30" TextAlignment="Center" Foreground="Black">Dock = "Top"</TextBlock>
+    </Border>
+    <Border Background="LightGray" Height="40" Margin="40,20,40,0" CornerRadius="5" DockPanel.Dock="Top">
+      <TextBlock Name="Field3" FontSize="30" TextAlignment="Center" Foreground="Black">Dock = "Top"</TextBlock>
+    </Border>
+    <Panel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+      <Border Margin="40, 2,40,20"
+        CornerRadius="10"
+        Background="LightGray" 
+              HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <TextBox Name="names" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></TextBox>
+      </Border>
+    </Panel>
+  </DockPanel>
+</Window>
