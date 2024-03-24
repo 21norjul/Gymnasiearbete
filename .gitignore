@@ -33,6 +33,11 @@
 # VS Code
 .vscode/
 
+# VS
+.vs/
+obj/
+bin/
+
 # NuGet Packages
 *.nuget.props
 *.nuget.targets
