@@ -1,0 +1,38 @@
+# .NET
+*.obj
+*.bin
+*.dll
+*.exe
+*.pdb
+*.user
+*.suo
+*.cache
+*.log
+*.vspscc
+*.vssscc
+*_i.c
+*_p.c
+*.ncb
+*.sdf
+*.ilk
+*.tlb
+*.tlh
+*.bak
+*.cache
+*.dbmdl
+*.log
+*.log.xml
+*.manifest
+*.res
+*.resources
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# VS Code
+.vscode/
+
+# NuGet Packages
+*.nuget.props
+*.nuget.targets
