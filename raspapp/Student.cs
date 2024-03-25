@@ -13,5 +13,6 @@ namespace raspapp
         public string EName { get; set; }
         public string Class { get; set; }
         public int Laps { get; set; }
+        public string Time { get; set; }
     }
 }

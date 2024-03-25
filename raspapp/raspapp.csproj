@@ -23,7 +23,7 @@
     <None Update="EleverExempel.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="ResultExample.csv">
+    <None Update="Resultat.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

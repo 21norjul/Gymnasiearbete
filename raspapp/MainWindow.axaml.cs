@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace raspapp
@@ -23,10 +24,10 @@ namespace raspapp
         string taggId;
 
         Dictionary<string, Student> students = new ();
-        Dictionary<string, Resultat> resultat = new();
 
         int IdValue = 0;
         int antalVarv = 1;
+        int laps = 0;
 
         public MainWindow()
         {
@@ -82,23 +83,15 @@ namespace raspapp
                 }
 
 
-                //int person = students[taggId];
-
-                //foreach (var kvp in students)
-                //{
-                //    Debug.WriteLine($"Key: {kvp.Key}, Value: {kvp.Value}   Antal varv: {antalVarv}  Varvlist: {varvList[taggId]}");
-
-                //}
-
-                //person++;
-
                 ElevNamn.Text = students[taggId].FName + " " + students[taggId].EName;
                 Klass.Text = students[taggId].Class;
                 Tid.Text = DateTime.Now.ToString("HH:mm:ss");
 
+                students[taggId].Time = Tid.Text;      
 
                 SaveStudents(students);
 
+   
                 taggId = ""; // Reset taggId for the next entry
 
                 return;
@@ -126,6 +119,7 @@ namespace raspapp
         public static readonly StyledProperty<string> CurrentTimeProperty =
         AvaloniaProperty.Register<MainWindow, string>(nameof(CurrentTime));
 
+        
 
 
         static void LoadStudents(Dictionary<string, Student> students)
@@ -150,41 +144,33 @@ namespace raspapp
 
 
 
-        static void SaveStudents(Dictionary<string, Student> students)
+        void SaveStudents(Dictionary<string, Student> students)
         {
             // Specify the path to the output CSV file
-            string filePath = "ResultExample.csv";
+            string filePath = "C:\\Users\\julia\\source\\repos\\21norjul\\Gymnasiearbete\\raspapp\\Resultat.csv";
 
             // Open a StreamWriter to write to the file
             using (StreamWriter writer = new StreamWriter(filePath))
             {
                 // Write the header line
-                writer.WriteLine("TagId;FName;EName;Class");
+                writer.WriteLine("TagId;FName;EName;Class;Laps;Date;Time");
 
                 // Iterate over each student in the dictionary
-                foreach (var kvp in students)
+                foreach (var kvp in students.Skip(1))
                 {
                     // Get the student object
                     var student = kvp.Value;
 
                     // Write the student information as a line in the CSV file
-                    writer.WriteLine($"{student.TaggID},{student.FName},{student.EName},{student.Class}");
+                    string studentsInfo = $"{student.TaggID},{student.FName},{student.EName},{student.Class},{student.Laps},{DateTime.Now.ToShortDateString()},{student.Time}";
+
+                    writer.WriteLine(studentsInfo);
+                    Debug.WriteLine(studentsInfo);
                 }
             }
-
-            Debug.WriteLine("CSV file saved successfully.");
         }
 
-        /*
 
-        static void SaveResult(Dictionary<string, Resultat> resultat)
-        {
-            string filePath = "ResultatExempel.csv";
-
-            var r = new Resultat { TaggID =  };
-            resultat.Add()
-        }*/
 
     }
-
 }
