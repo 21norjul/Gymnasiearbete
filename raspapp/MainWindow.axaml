@@ -2,8 +2,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="480"
-        Width="640" Height="480"
+        mc:Ignorable="d" d:DesignWidth="650" d:DesignHeight="500"
+        Width="650" Height="500"
         x:Class="raspapp.MainWindow"
         Title="raspapp"
         >
@@ -14,37 +14,29 @@
 					   Foreground="Black" FontSize="30" FontWeight="Black">Clock</TextBlock>
 		</Border>
 
-
-		<Panel>
-			<Border Background="LightGray" Height="50" Margin="40,30,40,0" CornerRadius="6">
-				<TextBlock Name="elevNamn" TextAlignment="Center" VerticalAlignment="Center"
-						Foreground="Black" FontSize="30" FontWeight="Medium"></TextBlock>
-			</Border>
-		</Panel>
-
+		
+		<Border Background="LightGray" Height="50" Margin="40,30,40,0" CornerRadius="6">
+			<TextBlock Name="elevNamn" TextAlignment="Center" VerticalAlignment="Center"
+					Foreground="Black" FontSize="30" FontWeight="Medium"></TextBlock>
+		</Border>
+		
 
 		<Grid ColumnDefinitions="*, *">
 			<Border Grid.Column="0" CornerRadius="6" Background="LightGray" Height="50" Margin="40,30,0,0">
 				<TextBlock Name="varv" Height="50" TextAlignment="Center" Padding="0,8,0,0"
 						Foreground="Black" FontSize="30" FontWeight="Medium"></TextBlock>
 			</Border>
-
-			<Panel Grid.Column="1">
-				<Border CornerRadius="6" Background="LightGray" Height="50" Margin="20,30,40,0">
-					<TextBlock Name="klass" Height="50" TextAlignment="Center" Padding="0,8,0,0"
-							Foreground="Black" FontSize="30" FontWeight="Medium"></TextBlock>
-				</Border>
-			</Panel>
+			<Border Grid.Column="1" CornerRadius="6" Background="LightGray" Height="50" Margin="20,30,40,0">
+				<TextBlock Name="klass" Height="50" TextAlignment="Center" Padding="0,8,0,0"
+						Foreground="Black" FontSize="30" FontWeight="Medium"></TextBlock>
+			</Border>
 		</Grid>
-
 
 
 		<Border Background="LightGray" Height="50" Margin="40,30,40,0" CornerRadius="6">
 			<TextBlock Name="tid" TextAlignment="Center" VerticalAlignment="Center"
 					Foreground="Black" FontSize="30" FontWeight="Medium"></TextBlock>
 		</Border>
-
-
 
 
 		<Panel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
