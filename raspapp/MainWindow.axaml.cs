@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace raspapp
@@ -64,9 +65,7 @@ namespace raspapp
             {
                 // User pressed Enter, process the entered line
                 var current = Names.Text + Environment.NewLine;
-                Names.Text = current + taggId + "  No Name  " + DateTime.Now.ToString("HH:mm:ss");
-
-                
+                Names.Text = current + taggId + students[taggId].FName + students[taggId].EName + DateTime.Now.ToString("HH:mm:ss");                      
 
                 if (students.ContainsKey(taggId))  // This tagg has been tagged before
                 {
@@ -81,18 +80,14 @@ namespace raspapp
                     Varv.Text = "Varv " + students[taggId].Laps.ToString();
                 }
 
-
                 ElevNamn.Text = students[taggId].FName + " " + students[taggId].EName;
                 Klass.Text = students[taggId].Class;
                 Tid.Text = DateTime.Now.ToString("HH:mm:ss");
 
-               // students[taggId].Times = Tid.Text;
                 students[taggId].Times.Add(Tid.Text);
 
-
                 SaveStudents(students);
-
-   
+                   
                 taggId = ""; // Reset taggId for the next entry
 
                 return;
@@ -131,7 +126,7 @@ namespace raspapp
             // Read all lines from the text file
             string[] lines = File.ReadAllLines(filePath);
 
-            // Iterate through each line and split the values by semicolon
+            // Go through each line and split the values by semicolon
             for (int i = 0; i < lines.Length; i++)
             {
                 // Split the line by semicolon and store the values in the array
@@ -151,19 +146,19 @@ namespace raspapp
             string filePath = "C:\\Users\\21norjul\\source\\repos\\21norjul\\Gymnasiearbete\\raspapp\\Resultat.csv";
 
             // Open a StreamWriter to write to the file
-            using (StreamWriter writer = new StreamWriter(filePath))
+            using (StreamWriter writer = new StreamWriter(filePath, false, Encoding.UTF8))
             {
                 // Write the header line
                 writer.WriteLine("TagId;FName;EName;Class;Laps;Date;Time");
 
 
-                // Iterate over each student in the dictionary
+                // Go through each value of the students in the dictionary
                 foreach (var kvp in students)
                 {
-                    // Get the student object
+                    // Get the students values
                     var student = kvp.Value;
 
-                    // Concatenate all timestamps for the current student
+                    // Concatenate all times for the current student
                     string allTimes = string.Join(",", student.Times);
 
                     // Write the student information as a line in the CSV file
@@ -174,21 +169,6 @@ namespace raspapp
                         writer.WriteLine(studentsInfo);
                         Debug.WriteLine(studentsInfo);
                     }
-
-
-
-/*
-                    // Iterate over each student in the dictionary
-                    foreach (var kvp in students.Skip(1))
-                {
-                    // Get the student object
-                    var student = kvp.Value;
-
-                    // Write the student information as a line in the CSV file
-                    string studentsInfo = $"{student.TaggID},{student.FName},{student.EName},{student.Class},{student.Laps},{DateTime.Now.ToShortDateString()},{student.Time}";
-
-                    writer.WriteLine(studentsInfo);
-                    Debug.WriteLine(studentsInfo);*/
                 }
             }
         }
