@@ -49,7 +49,6 @@ namespace raspapp
             Tid = this.FindControl<TextBlock>("tid");
             Varv = this.FindControl<TextBlock>("varv");
 
-            // Subscribe to the KeyUp event to handle keyboard input
             Names.KeyUp += TextBox_KeyUp;
             Names.Focus();
 
@@ -63,11 +62,11 @@ namespace raspapp
         {
             if (e.Key == Key.Enter)
             {
-                /*array.Add("hej");*/
                 // User pressed Enter, process the entered line
                 var current = Names.Text + Environment.NewLine;
                 Names.Text = current + taggId + "  No Name  " + DateTime.Now.ToString("HH:mm:ss");
 
+                
 
                 if (students.ContainsKey(taggId))  // This tagg has been tagged before
                 {
@@ -87,7 +86,9 @@ namespace raspapp
                 Klass.Text = students[taggId].Class;
                 Tid.Text = DateTime.Now.ToString("HH:mm:ss");
 
-                students[taggId].Time = Tid.Text;      
+               // students[taggId].Times = Tid.Text;
+                students[taggId].Times.Add(Tid.Text);
+
 
                 SaveStudents(students);
 
@@ -147,7 +148,7 @@ namespace raspapp
         void SaveStudents(Dictionary<string, Student> students)
         {
             // Specify the path to the output CSV file
-            string filePath = "C:\\Users\\julia\\source\\repos\\21norjul\\Gymnasiearbete\\raspapp\\Resultat.csv";
+            string filePath = "C:\\Users\\21norjul\\source\\repos\\21norjul\\Gymnasiearbete\\raspapp\\Resultat.csv";
 
             // Open a StreamWriter to write to the file
             using (StreamWriter writer = new StreamWriter(filePath))
@@ -155,8 +156,30 @@ namespace raspapp
                 // Write the header line
                 writer.WriteLine("TagId;FName;EName;Class;Laps;Date;Time");
 
+
                 // Iterate over each student in the dictionary
-                foreach (var kvp in students.Skip(1))
+                foreach (var kvp in students)
+                {
+                    // Get the student object
+                    var student = kvp.Value;
+
+                    // Concatenate all timestamps for the current student
+                    string allTimes = string.Join(",", student.Times);
+
+                    // Write the student information as a line in the CSV file
+                    foreach (string time in student.Times)
+                    {
+                        string studentsInfo = $"{student.TaggID},{student.FName},{student.EName},{student.Class},{student.Laps},{DateTime.Now.ToShortDateString()},{allTimes}";
+
+                        writer.WriteLine(studentsInfo);
+                        Debug.WriteLine(studentsInfo);
+                    }
+
+
+
+/*
+                    // Iterate over each student in the dictionary
+                    foreach (var kvp in students.Skip(1))
                 {
                     // Get the student object
                     var student = kvp.Value;
@@ -165,7 +188,7 @@ namespace raspapp
                     string studentsInfo = $"{student.TaggID},{student.FName},{student.EName},{student.Class},{student.Laps},{DateTime.Now.ToShortDateString()},{student.Time}";
 
                     writer.WriteLine(studentsInfo);
-                    Debug.WriteLine(studentsInfo);
+                    Debug.WriteLine(studentsInfo);*/
                 }
             }
         }
