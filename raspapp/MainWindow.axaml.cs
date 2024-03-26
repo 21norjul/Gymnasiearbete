@@ -65,7 +65,7 @@ namespace raspapp
             {
                 // User pressed Enter, process the entered line
                 var current = Names.Text + Environment.NewLine;
-                Names.Text = current + taggId + students[taggId].FName + students[taggId].EName + DateTime.Now.ToString("HH:mm:ss");                      
+                Names.Text = current + taggId + "Namn" + DateTime.Now.ToString("HH:mm:ss");                      
 
                 if (students.ContainsKey(taggId))  // This tagg has been tagged before
                 {
@@ -124,7 +124,7 @@ namespace raspapp
             string filePath = "EleverExempel.csv";
 
             // Read all lines from the text file
-            string[] lines = File.ReadAllLines(filePath);
+            string[] lines = File.ReadAllLines(filePath, Encoding.UTF8);
 
             // Go through each line and split the values by semicolon
             for (int i = 0; i < lines.Length; i++)
@@ -143,32 +143,29 @@ namespace raspapp
         void SaveStudents(Dictionary<string, Student> students)
         {
             // Specify the path to the output CSV file
-            string filePath = "C:\\Users\\21norjul\\source\\repos\\21norjul\\Gymnasiearbete\\raspapp\\Resultat.csv";
+            string filePath = "./Resultat.csv";
 
             // Open a StreamWriter to write to the file
             using (StreamWriter writer = new StreamWriter(filePath, false, Encoding.UTF8))
             {
                 // Write the header line
-                writer.WriteLine("TagId;FName;EName;Class;Laps;Date;Time");
+                writer.WriteLine("TagId,FName,EName,Class,Laps,Date,Time");
 
 
                 // Go through each value of the students in the dictionary
-                foreach (var kvp in students)
+                foreach (var kvp in students.Skip(1))
                 {
-                    // Get the students values
+                    // Get the student object
                     var student = kvp.Value;
 
-                    // Concatenate all times for the current student
-                    string allTimes = string.Join(",", student.Times);
+                    // Concatenate the list of times into a single string
+                    string times = string.Join(",", student.Times);
 
                     // Write the student information as a line in the CSV file
-                    foreach (string time in student.Times)
-                    {
-                        string studentsInfo = $"{student.TaggID},{student.FName},{student.EName},{student.Class},{student.Laps},{DateTime.Now.ToShortDateString()},{allTimes}";
+                    string studentsInfo = $"{student.TaggID},{student.FName},{student.EName},{student.Class},{student.Laps},{DateTime.Now.ToShortDateString()},{times}";
 
-                        writer.WriteLine(studentsInfo);
-                        Debug.WriteLine(studentsInfo);
-                    }
+                    writer.WriteLine(studentsInfo);
+                    Debug.WriteLine(studentsInfo);
                 }
             }
         }
