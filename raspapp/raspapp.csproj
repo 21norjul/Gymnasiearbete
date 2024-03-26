@@ -7,9 +7,9 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
   </PropertyGroup>
-  <ItemGroup>
-    <None Include="bin\Debug\net6.0\Resultat.csv" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Include="bin\Debug\net6.0\Resultat.csv" />
+	</ItemGroup>
 
 
   <ItemGroup>
@@ -27,4 +27,5 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+
 </Project>

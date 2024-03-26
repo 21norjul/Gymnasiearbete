@@ -149,7 +149,7 @@ namespace raspapp
             using (StreamWriter writer = new StreamWriter(filePath, false, Encoding.UTF8))
             {
                 // Write the header line
-                writer.WriteLine("TagId,FName,EName,Class,Laps,Date,Time");
+                writer.WriteLine("TagId;FName;EName;Class;Laps;Date;Time");
 
 
                 // Go through each value of the students in the dictionary
@@ -159,10 +159,10 @@ namespace raspapp
                     var student = kvp.Value;
 
                     // Concatenate the list of times into a single string
-                    string times = string.Join(",", student.Times);
+                    string times = string.Join(";", student.Times);
 
                     // Write the student information as a line in the CSV file
-                    string studentsInfo = $"{student.TaggID},{student.FName},{student.EName},{student.Class},{student.Laps},{DateTime.Now.ToShortDateString()},{times}";
+                    string studentsInfo = $"{student.TaggID};{student.FName};{student.EName};{student.Class};{student.Laps};{DateTime.Now.ToShortDateString()};{times}";
 
                     writer.WriteLine(studentsInfo);
                     Debug.WriteLine(studentsInfo);
