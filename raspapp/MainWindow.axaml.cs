@@ -23,8 +23,6 @@ namespace raspapp
 
         private readonly TextBlock Clock;
         private readonly TextBox InputBox;
-        private readonly TextBlock ElevNamn;
-        private readonly TextBlock Klass;
         private readonly TextBlock Tid;
         private readonly TextBlock Varv;
         readonly TextBlock TaggID;
@@ -38,6 +36,9 @@ namespace raspapp
         private const int ShutdownPin = 14; // GPIO pin number for the shutdown button
         private const int ShutdownDuration = 5000; // Shutdown duration in milliseconds (5 seconds)
         private GpioController gpioController;
+
+        // Specify the path to the output CSV file
+        string filePath = $"./{DateTime.Now.ToString("yyyy/MM/dd")}.csv";
 
         public MainWindow()
         {
@@ -63,8 +64,9 @@ namespace raspapp
 
             this.AttachedToVisualTree += (sender, e) => InputBox.Focus();
             this.KeyDown += Window_KeyDown;
-        }
 
+            MergeResultsOfTheDay();
+        }
 
 
 
@@ -85,9 +87,9 @@ namespace raspapp
                     // Check if this student tagged recently
                     if (TaggedRecently(taggId))
                     {
-                        Varv.Text = "Can't tag";
-                        Tid.Text = "again";
-                        TaggID.Text = "so soon!";
+                        Varv.Text = "Fusk";
+                        Tid.Text = "Fusk";
+                        TaggID.Text = "Not so fast";
                         doSave = false;
                     }
                     else
@@ -128,6 +130,8 @@ namespace raspapp
             }
             taggId += e.KeySymbol;
         }
+
+
 
         private bool TaggedRecently(string taggId)
         {
@@ -171,16 +175,12 @@ namespace raspapp
         
         
         void SaveStudents(Dictionary<string, Student> students)
-        {
-            // Specify the path to the output CSV file
-            string filePath = "./Resultat.csv";
-
+        {          
             // Open a StreamWriter to write to the file
             using (StreamWriter writer = new StreamWriter(filePath, false, Encoding.UTF8))
             {
                 // Write the header line
                 writer.WriteLine("TagId;Laps;Date;Times");
-
 
                 // Go through each value of the students in the dictionary
                 foreach (var kvp in students)
@@ -212,23 +212,21 @@ namespace raspapp
                 this.Close();
             }
         }
-
-
-        
+                
         private void InitializeGpioController()
         {
-            // Initialize GPIO controller
-            //gpioController = new GpioController();
+            //Initialize GPIO controller
+            gpioController = new GpioController();
 
-            //// Set GPIO pin as input with pull-up resistor enabled
-            //gpioController.OpenPin(ShutdownPin, PinMode.InputPullUp);
+            // Set GPIO pin as input with pull-up resistor enabled
+            gpioController.OpenPin(ShutdownPin, PinMode.InputPullUp);
 
-            //// Attach event handler for pin value changes
-            //gpioController.RegisterCallbackForPinValueChangedEvent(ShutdownPin, PinEventTypes.Rising | PinEventTypes.Falling, HandleButtonPress);
+            // Attach event handler for pin value changes
+            gpioController.RegisterCallbackForPinValueChangedEvent(ShutdownPin, PinEventTypes.Rising | PinEventTypes.Falling, ButtonPress);
         }
 
         DateTime lastClick = DateTime.MinValue;
-        private void HandleButtonPress(object sender, PinValueChangedEventArgs e)
+        private void ButtonPress(object sender, PinValueChangedEventArgs e)
         {
 
             var timeSinceLastClick = DateTime.Now - lastClick;
@@ -242,8 +240,58 @@ namespace raspapp
                     Process.Start("sudo", "shutdown -h now");
                 }
             }
+            if (timeSinceLastClick.TotalSeconds < 1)
+            {
+                if (e.ChangeType == PinEventTypes.Falling)
+                {
+                    // Close window if Button is pressed twice
+                    this.WindowState = WindowState.Normal;
+                    this.Close();
+                }
+            }
         }
-        
+
+
+
+        void MergeResultsOfTheDay()
+        {
+            if (File.Exists(filePath))
+            {
+                Debug.WriteLine("FILE ALREADY EXCISTS!");
+
+                // Read all lines from the file except the header
+                string[] lines = File.ReadAllLines(filePath).Skip(1).ToArray();
+
+                // Parse each line and add students to the dictionary
+                foreach (string line in lines)
+                {
+                    // Split the line by the delimiter
+                    string[] parts = line.Split(';');
+
+                    // Extract the information
+                    string taggId = parts[0];
+                    int laps = int.Parse(parts[1]);
+                    string[] times = parts[3].Split(';');
+
+                    // Check if the student already exists in the dictionary
+                    if (!students.ContainsKey(taggId))
+                    {
+                        // Create a new Student object
+                        Student student = new Student
+                        {
+                            TaggID = taggId,
+                            Laps = laps,
+                            Times = new List<string>(times)
+                        };
+
+                        // Add the student to the dictionary
+                        students[taggId] = student;
+                    }
+                }
+            }
+        }
+
+
 
 
     }
