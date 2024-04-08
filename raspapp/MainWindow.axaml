@@ -2,45 +2,40 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="650" d:DesignHeight="600"
-        Width="650" Height="600"
+        mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="800"
+        Width="900" Height="800"
         x:Class="raspapp.MainWindow"
         Title="raspapp"
         >
 	<StackPanel Background="Black">
 
-		<Border Background="Cornsilk" Height="50" Margin="40,50,40,10" CornerRadius="6">
+		
+		<Border Background="Cornsilk" Height="70" Width="300" Margin="40,90,40,10" CornerRadius="6">
 			<TextBlock Name="clock" TextAlignment="Center" VerticalAlignment="Center"
-					   Foreground="Black" FontSize="30" FontWeight="Black">Clock</TextBlock>
-		</Border>
-
-		
-		<Border Background="LightGray" Height="50" Margin="40,30,40,0" CornerRadius="6">
-			<TextBlock Name="elevNamn" TextAlignment="Center" VerticalAlignment="Center"
-					Foreground="Black" FontSize="30" FontWeight="Medium"></TextBlock>
+					   Foreground="Black" FontSize="40" FontWeight="Black">Clock</TextBlock>
 		</Border>
 		
 
-		<Grid ColumnDefinitions="*, *">
-			<Border Grid.Column="0" CornerRadius="6" Background="LightGray" Height="50" Margin="40,30,0,0">
-				<TextBlock Name="varv" Height="50" TextAlignment="Center" Padding="0,8,0,0"
-						Foreground="Black" FontSize="30" FontWeight="Medium"></TextBlock>
+		<Grid ColumnDefinitions="*,*" Width="600"  Margin="0,40,0,0">
+			<Border Grid.Column="0" CornerRadius="6" Background="LightGray" Height="70" Width="220" Margin="0,0,15,0" HorizontalAlignment="Right">
+				<TextBlock Name="varv" Height="60" TextAlignment="Center" Padding="0,8,8,0"
+						Foreground="Black" FontSize="40" FontWeight="Medium"></TextBlock>
 			</Border>
-			<Border Grid.Column="1" CornerRadius="6" Background="LightGray" Height="50" Margin="20,30,40,0">
-				<TextBlock Name="klass" Height="50" TextAlignment="Center" Padding="0,8,0,0"
-						Foreground="Black" FontSize="30" FontWeight="Medium"></TextBlock>
+			<Border Grid.Column="1" CornerRadius="6" Background="LightGray" Height="70" Width="220" Margin="15,0,0,0" HorizontalAlignment="Left">
+				<TextBlock Name="tid" TextAlignment="Center" VerticalAlignment="Center"
+					Foreground="Black" FontSize="40" FontWeight="Medium"></TextBlock>
 			</Border>
 		</Grid>
 
 
-		<Border Background="LightGray" Height="50" Margin="40,30,40,0" CornerRadius="6">
-			<TextBlock Name="tid" TextAlignment="Center" VerticalAlignment="Center"
-					Foreground="Black" FontSize="30" FontWeight="Medium"></TextBlock>
+		<Border Background="LightGray" Height="70" Width="300" Margin="40,50,40,0" CornerRadius="6">
+			<TextBlock Name="taggID" TextAlignment="Center" VerticalAlignment="Center"
+					Foreground="Black" FontSize="40" FontWeight="Medium"></TextBlock>
 		</Border>
 
 
 		<Panel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-			<Border Margin="40,60,40,0" CornerRadius="10" Background="LightGray"
+			<Border Margin="40,200,40,0" CornerRadius="10" Background="LightGray"
 					HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 				<TextBox Name="names" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></TextBox>
 			</Border>
